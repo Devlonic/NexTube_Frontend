@@ -17,6 +17,10 @@ import * as yup from 'yup';
 import { store } from '../../../../../store';
 import { ProfileVideosReducerActionsType } from '../../../../../store/reducers/profileVideos/types';
 import { useTranslation } from 'react-i18next';
+import * as SignalR from '@microsoft/signalr';
+import { getToken } from '../../../../../services/tokenService';
+import { VideoUploadProgress } from './types';
+import { ProgressBar } from '../../../../common/ProgressBar';
 
 export const AddVideoOverlay = () => {
   const { t } = useTranslation();
@@ -24,7 +28,8 @@ export const AddVideoOverlay = () => {
   const [selected, setSelected] = useState<string>('Public');
   const [video, setVideo] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const [hub, setHub] = useState<SignalR.HubConnection>();
+  const [uploadProgress, setUploadProgress] = useState<VideoUploadProgress>();
   const navigator = useNavigate();
   const root = useRef(null);
 
@@ -66,9 +71,44 @@ export const AddVideoOverlay = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const signalr = new SignalR.HubConnectionBuilder()
+      .withUrl('/signalr/progress', {
+        transport: SignalR.HttpTransportType.WebSockets,
+        accessTokenFactory: () => {
+          return getToken() ?? '';
+        },
+      })
+      .configureLogging(SignalR.LogLevel.Warning)
+      .build();
+
+    signalr.on('OnProgressStatusChanged', (progress: VideoUploadProgress) => {
+      console.log(progress);
+      setUploadProgress(progress);
+      // store.dispatch({
+      //   type: NotificationType.SET_PENDING_NOTIFICATIONS_INDICATOR,
+      //   payload: true,
+      // });
+      // store.dispatch({
+      //   type: NotificationType.PUSH_NOTIFICATION_TO_FRONT,
+      //   payload: notification,
+      // });
+    });
+
+    setHub(signalr);
+
+    return () => {
+      // signalr.stop;
+    };
+  }, [video]);
+
   const onFormSubmit = async (values: IVideoUploadRequest) => {
     try {
       setIsLoading(true);
+
+      hub?.start().catch((e: any) => {
+        console.error('signalr start error', e);
+      });
 
       var result = (
         await http_api.post<IVideoLookup>('/api/video/uploadVideo', values, {
@@ -81,6 +121,10 @@ export const AddVideoOverlay = () => {
       store.dispatch({
         type: ProfileVideosReducerActionsType.APPEND_BEGIN_PROFILE_VIDEO,
         payload: result,
+      });
+
+      hub?.stop().catch((e: any) => {
+        console.error('signalr stop error', e);
       });
 
       setIsLoading(false);
@@ -127,11 +171,16 @@ export const AddVideoOverlay = () => {
         <div ref={root} className="w-screen h-screen flex justify-center">
           <div className="absolute">
             <form
-              className="md:mb-10 overflow-y-auto bg-secondary relative sm:top-0 md:top-10 lg:top-30 lg:left-10 p-6 rounded-md"
+              className="md:mb-10 overflow-y-auto bg-secondary relative sm:top-0 md:top-10 lg:top-20 lg:left-10 p-6 rounded-md"
               onSubmit={handleSubmit}
             >
               <div className="header flex justify-between">
-                <h1 className="text-white text-3xl">{values.name}</h1>
+                <div className="w-full z-9999 px-6 mt-8">
+                  <ProgressBar
+                    percentage={uploadProgress?.percentage ?? 0}
+                  ></ProgressBar>
+                </div>
+                {/* <h1 className="text-white text-3xl">{values.name}</h1> */}
                 <div className="flex items-center justify-center">
                   <div className="w-40 mr-6">
                     <PrimaryProcessingButton
