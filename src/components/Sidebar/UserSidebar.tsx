@@ -27,6 +27,7 @@ import {
   SubscriptionReducerActionsType,
 } from '../../store/reducers/subscription/types';
 import { store } from '../../store';
+import { ChannelPhoto } from '../ChannelPhoto';
 
 interface UserSidebarProps {
   sidebarOpen: boolean;
@@ -279,15 +280,17 @@ const UserSidebar = ({ sidebarOpen, setSidebarOpen }: UserSidebarProps) => {
                                     title={`${subscription.firstName} ${subscription.lastName}`}
                                     icon={
                                       <div className="thumb bg-danger rounded-full w-8 h-8">
-                                        <img
-                                          className="h-8 w-8 rounded-full"
-                                          src={
-                                            '/api/Photo/GetPhotoUrl/' +
-                                            subscription.channelPhotoFileId +
-                                            '/50'
-                                          }
-                                          alt="User"
-                                        />
+                                        {subscription.channelPhotoFileId && (
+                                          <img
+                                            className="h-8 w-8 rounded-full"
+                                            src={
+                                              '/api/Photo/GetPhotoUrl/' +
+                                              subscription.channelPhotoFileId +
+                                              '/50'
+                                            }
+                                            alt="User"
+                                          />
+                                        )}
                                       </div>
                                     }
                                   />

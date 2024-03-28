@@ -37,9 +37,19 @@ export const AddVideoOverlay = () => {
   };
 
   const requestSchema: any = yup.object({
-    name: yup.string().required(t('addVideoOverlay.videoTitleLabel')).min(2).max(100),
-    description: yup.string().required(t('addVideoOverlay.videoDescriptionLabel')).min(2).max(1000),
-    previewPhoto: yup.mixed().required(t('addVideoOverlay.selectVideoPreviewLabel')),
+    name: yup
+      .string()
+      .required(t('addVideoOverlay.videoTitleLabel'))
+      .min(2)
+      .max(100),
+    description: yup
+      .string()
+      .required(t('addVideoOverlay.videoDescriptionLabel'))
+      .min(2)
+      .max(1000),
+    previewPhoto: yup
+      .mixed()
+      .required(t('addVideoOverlay.selectVideoPreviewLabel')),
     video: yup.mixed().required(t('addVideoOverlay.videoFilenameLabel')),
   });
 
@@ -79,6 +89,7 @@ export const AddVideoOverlay = () => {
       handleSuccess(t('addVideoOverlay.videoUploadSuccess'));
     } catch (error: any) {
       handleError(error);
+      setIsLoading(false);
     }
   };
 
@@ -141,7 +152,9 @@ export const AddVideoOverlay = () => {
               </div>
               <hr className="mx-6 h-0.5 my-8 border-0 dark:bg-primary"></hr>
               <div className="mb-3">
-                <h1 className="text-white text-3xl">{t('addVideoOverlay.detailsHeading')}</h1>
+                <h1 className="text-white text-3xl">
+                  {t('addVideoOverlay.detailsHeading')}
+                </h1>
               </div>
               <div className="content md:flex">
                 <div className="details md:w-60 lg:w-125">
@@ -168,7 +181,9 @@ export const AddVideoOverlay = () => {
                   <div className="border-2 rounded-md border-gray p-2">
                     <div className="mb-3">
                       <CheckboxFour
-                        description={t('addVideoOverlay.makeVideoPublicOrPrivateDescription')}
+                        description={t(
+                          'addVideoOverlay.makeVideoPublicOrPrivateDescription',
+                        )}
                         onChange={() => {}}
                         isChecked={true}
                         name={t('addVideoOverlay.saveOrPublishLabel')}
@@ -178,7 +193,9 @@ export const AddVideoOverlay = () => {
                     <div className="ml-6">
                       <div className="mb-3">
                         <CheckboxFour
-                          description={t('addVideoOverlay.everyoneCanWatchDescription')}
+                          description={t(
+                            'addVideoOverlay.everyoneCanWatchDescription',
+                          )}
                           onChange={() => {
                             setSelected('Public');
                             values.accessModificator = 'Public';
@@ -190,7 +207,9 @@ export const AddVideoOverlay = () => {
                       </div>
                       <div className="">
                         <CheckboxFour
-                          description={t('addVideoOverlay.onlyYouCanWatchDescription')}
+                          description={t(
+                            'addVideoOverlay.onlyYouCanWatchDescription',
+                          )}
                           onChange={() => {
                             setSelected('Private');
                             values.accessModificator = 'Private';

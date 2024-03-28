@@ -14,7 +14,9 @@ export const Navbar = (props: {
   const references = props.refs.map((r, id) => (
     <li key={id} className="mr-6">
       <NavLink
-        title={r.enabled == false ? 'Coming soon' : r.title}
+        title={
+          r.enabled == false || r.title.length == 0 ? 'Coming soon' : r.title
+        }
         className={classNames('text-gray', {
           'text-white border-b-2 border-primary pointer-events-auto':
             r.path == currentRoute || (currentRoute == '' && r.index == true),

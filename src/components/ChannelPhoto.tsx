@@ -4,11 +4,13 @@ export const ChannelPhoto = (props: {
   return (
     <>
       <span>
-        <img
-          className="h-12 min-w-[3rem] min-h-[3rem] w-12 rounded-full"
-          src={'/api/Photo/GetPhotoUrl/' + props.photoFileId + '/50'}
-          alt="User"
-        />
+        {props.photoFileId && (
+          <img
+            className="h-12 min-w-[3rem] min-h-[3rem] w-12 rounded-full"
+            src={'/api/Photo/GetPhotoUrl/' + props.photoFileId + '/50'}
+            alt="User"
+          />
+        )}
       </span>
     </>
   );
