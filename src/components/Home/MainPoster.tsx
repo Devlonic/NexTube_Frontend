@@ -22,9 +22,9 @@ export const MainPoster = () => {
   return (
     <>
       {randomVideo && (
-        <div className="h-[50vh]">
+        <div className="h-[20em] hidden min-[1300px]:block">
           <div className="h-full flex items-center justify-between">
-            <div className="flex z-[9997] flex-col min-[1000px]:w-[32em] min-[1364px]:w-[64em]">
+            <div className="flex z-[9997] flex-col min-[1000px]:w-[32em] ">
               <div className="mb-2">
                 <h1 className="text-white text-6xl font-semibold">
                   {t('mainPoster.watchNow')}
@@ -50,7 +50,6 @@ export const MainPoster = () => {
                 </a>
               </div>
             </div>
-
             <a
               className="relative h-full w-full "
               href={'/video/watch/' + randomVideo?.id}
@@ -77,7 +76,7 @@ export const MainPoster = () => {
       )}
 
       {!randomVideo && (
-        <div className="h-[50vh]">
+        <div className="h-[20em] hidden min-[1300px]:block">
           <div className="h-full flex items-center justify-between">
             <div className="flex z-[9997] flex-col min-[1000px]:w-[32em] min-[1364px]:w-[64em]">
               <div className="mb-2">

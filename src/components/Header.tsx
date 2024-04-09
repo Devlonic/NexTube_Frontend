@@ -26,7 +26,7 @@ const Header = (props: {
               e.stopPropagation();
               props.setSidebarOpen(!props.sidebarOpen);
             }}
-            className="z-99999 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
+            className="z-[99999999] block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark"
           >
             <span className="relative block h-5.5 w-5.5 cursor-pointer">
               <span className="du-block absolute right-0 h-full w-full">
@@ -85,20 +85,25 @@ const Header = (props: {
 
         <div className="flex z-9999 items-center gap-3 2xsm:gap-7">
           {/* <!-- User Area --> */}
-          {isAuth && <DropdownUser sidebarOpen={props.sidebarOpen} setSidebarOpen={props.setSidebarOpen} />}
+          {isAuth && (
+            <DropdownUser
+              sidebarOpen={props.sidebarOpen}
+              setSidebarOpen={props.setSidebarOpen}
+            />
+          )}
           {!isAuth && (
             <>
               <Link
                 to="/auth/signup"
                 className="flex text-gray items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
               >
-                {t("auth.signUp.signUpButton")}
+                {t('auth.signUp.signUpButton')}
               </Link>
               <Link
                 to="/auth/signin"
                 className="flex text-gray items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
               >
-                {t("auth.signUp.signInButton")}
+                {t('auth.signUp.signInButton')}
               </Link>
             </>
           )}

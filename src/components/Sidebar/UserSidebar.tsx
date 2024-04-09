@@ -92,10 +92,7 @@ const UserSidebar = ({ sidebarOpen, setSidebarOpen }: UserSidebarProps) => {
   const userSubscriptions = useSelector(
     (store: any) => store.subscription as IUsersubscription,
   );
-  console.log(
-    'store',
-    userSubscriptions.subscriptions.map((c) => c.channelPhotoFileId),
-  );
+
   const { user } = useSelector((store: any) => store.auth as IAuthUser);
   useEffect(() => {
     const fetchSubscriptions = async () => {
@@ -111,11 +108,7 @@ const UserSidebar = ({ sidebarOpen, setSidebarOpen }: UserSidebarProps) => {
     };
     console.log(user?.roles.find((r) => r == 'Unverified'));
     fetchSubscriptions();
-  }, [
-    user,
-    SubscriptionReducerActionsType.ADD_SUBSCRIBER,
-    SubscriptionReducerActionsType.DELETE_SUBSCRIBER,
-  ]);
+  }, [user]);
   const { t } = useTranslation(); // Initialize the hook
   return (
     <>
@@ -161,7 +154,7 @@ const UserSidebar = ({ sidebarOpen, setSidebarOpen }: UserSidebarProps) => {
               <ul className="mb-6 flex flex-col gap-1.5">
                 {user && (
                   <>
-                    <li>
+                    <li className="!text-white">
                       <SidebarItem
                         active={true}
                         url="/profile"
@@ -170,7 +163,7 @@ const UserSidebar = ({ sidebarOpen, setSidebarOpen }: UserSidebarProps) => {
                       ></SidebarItem>
                     </li>
 
-                    <li>
+                    <li className="!text-white">
                       <SidebarItem
                         url={`/channel/${user?.userId}`}
                         icon={<UserGroupIcon></UserGroupIcon>}
@@ -179,7 +172,7 @@ const UserSidebar = ({ sidebarOpen, setSidebarOpen }: UserSidebarProps) => {
                       ></SidebarItem>
                     </li>
 
-                    <li>
+                    <li className="!text-white">
                       <SidebarItem
                         active={false}
                         url={`/channel/${user.userId}/playlists`}
@@ -190,7 +183,7 @@ const UserSidebar = ({ sidebarOpen, setSidebarOpen }: UserSidebarProps) => {
                       ></SidebarItem>
                     </li>
 
-                    <li>
+                    <li className="!text-white">
                       <SidebarItem
                         active={false}
                         url="/history"
@@ -214,23 +207,23 @@ const UserSidebar = ({ sidebarOpen, setSidebarOpen }: UserSidebarProps) => {
                   </>
                 )}
 
-                {/* <li>
+                <li className="!text-gray !disabled pointer-events-none">
                   <SidebarItem
                     active={false}
                     url="/liked"
-                    title={t("userSidebar.likedVideos")}
+                    title={t('userSidebar.likedVideos')}
                     icon={<HandThumbUpIcon></HandThumbUpIcon>}
                   ></SidebarItem>
-                </li> */}
+                </li>
 
-                {/* <li>
+                <li className="!text-gray !disabled pointer-events-none">
                   <SidebarItem
                     active={false}
                     url="/later"
-                    title={t("userSidebar.watchLater")}
+                    title={t('userSidebar.watchLater')}
                     icon={<ClockIcon></ClockIcon>}
                   ></SidebarItem>
-                </li> */}
+                </li>
 
                 <li>
                   <div className="h-8"></div>
@@ -247,7 +240,7 @@ const UserSidebar = ({ sidebarOpen, setSidebarOpen }: UserSidebarProps) => {
                       <React.Fragment>
                         <NavLink
                           to="#"
-                          className={`group relative flex items-center gap-2.5 py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-secondary dark:hover:bg-secondary rounded-lg ${
+                          className={`!text-white group relative flex items-center gap-2.5 py-2 px-4 font-medium  duration-300 ease-in-out hover:bg-secondary dark:hover:bg-secondary rounded-lg ${
                             (pathname === '/auth' ||
                               pathname.includes('auth')) &&
                             ''
@@ -273,7 +266,7 @@ const UserSidebar = ({ sidebarOpen, setSidebarOpen }: UserSidebarProps) => {
                           <ul>
                             {userSubscriptions.subscriptions.map(
                               (subscription, index) => (
-                                <li key={index}>
+                                <li key={index} className="!text-white">
                                   <SidebarItem
                                     active={true}
                                     url={`/channel/${subscription.userId}`}
@@ -310,7 +303,7 @@ const UserSidebar = ({ sidebarOpen, setSidebarOpen }: UserSidebarProps) => {
 
             <div>
               <ul className="mb-6 flex flex-col gap-1.5">
-                <li>
+                <li className="!text-white">
                   <SidebarItem
                     active={true}
                     url="/profile/info"
@@ -355,9 +348,9 @@ const SidebarItem = (props: {
     <>
       <NavLink
         to={props.url}
-        className={`group rounded-lg relative flex items-center gap-2.5 py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-secondary dark:hover:bg-secondary`}
+        className={`group rounded-lg relative flex items-center gap-2.5 py-2 px-4 font-medium duration-300 ease-in-out hover:bg-secondary dark:hover:bg-secondary`}
       >
-        <div className="icon w-8 relative dark:text-white">{props.icon}</div>
+        <div className="icon w-8 relative ">{props.icon}</div>
         {props.title}
       </NavLink>
     </>
