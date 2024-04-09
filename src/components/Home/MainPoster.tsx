@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import './style.css';
 import { IGetVideoResult, IVideoLookup } from '../../pages/Video/common/types';
 import http_api from '../../services/http_api';
+import { Link } from 'react-router-dom';
 
 export const MainPoster = () => {
   const { t } = useTranslation();
@@ -22,7 +23,7 @@ export const MainPoster = () => {
   return (
     <>
       {randomVideo && (
-        <div className="h-[20em] hidden min-[1300px]:block">
+        <div className="h-[24em] hidden min-[1300px]:block">
           <div className="h-full flex items-center justify-between">
             <div className="flex z-[9997] flex-col min-[1000px]:w-[32em] ">
               <div className="mb-2">
@@ -31,14 +32,14 @@ export const MainPoster = () => {
                 </h1>
               </div>
               <div className="mb-2">
-                <a href={'/video/watch/' + randomVideo?.id}>
+                <Link to={'/video/watch/' + randomVideo?.id}>
                   <h2 className=" font-semibold text-primary  text-5xl">
                     {randomVideo?.name}
                   </h2>{' '}
-                </a>
+                </Link>
               </div>
               <div className="mb-2">
-                <a href={'/channel/' + randomVideo?.creator?.userId}>
+                <Link to={'/channel/' + randomVideo?.creator?.userId}>
                   {' '}
                   <p className="font-semibold text-white text-3xl">
                     {t('mainPoster.from') +
@@ -47,12 +48,12 @@ export const MainPoster = () => {
                       ' ' +
                       randomVideo?.creator?.lastName}
                   </p>
-                </a>
+                </Link>
               </div>
             </div>
-            <a
+            <Link
               className="relative h-full w-full "
-              href={'/video/watch/' + randomVideo?.id}
+              to={'/video/watch/' + randomVideo?.id}
             >
               <div className="absolute z-[99] -top-[4em] -left-[20em] h-full w-[64em]">
                 <div className="h-full w-full flex justify-end">
@@ -70,13 +71,13 @@ export const MainPoster = () => {
                   <div className="fade-gradient w-full h-[130%] absolute"></div>
                 </div>
               </div>
-            </a>
+            </Link>
           </div>
         </div>
       )}
 
       {!randomVideo && (
-        <div className="h-[20em] hidden min-[1300px]:block">
+        <div className="h-[24em] hidden min-[1300px]:block">
           <div className="h-full flex items-center justify-between">
             <div className="flex z-[9997] flex-col min-[1000px]:w-[32em] min-[1364px]:w-[64em]">
               <div className="mb-2">
