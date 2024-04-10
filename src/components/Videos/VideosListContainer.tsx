@@ -18,7 +18,9 @@ const VideosListContainer = () => {
   const [videos, setVideos] = useState<IVideoLookup[]>([]);
   const [page, setPage] = useState<number>(1);
   const [pageSize] = useState<number>(12);
-  const [lock] = useState<AsyncLock>(new AsyncLock());
+
+  const [prevLoadedCount, setPrevLoadedCount] = useState<number>(12);
+
   useEffect(() => {
     const loadVideoAsync = async () => {
       if (page == 0 || !canLoad) {
@@ -35,9 +37,10 @@ const VideosListContainer = () => {
           `/api/video/getVideoList?Page=${page}&PageSize=${pageSize}`,
         )
       ).data;
+      // await sleep(5000);
 
       setVideos((prev_videos) => [...prev_videos, ...result.videos]);
-
+      setPrevLoadedCount(result.videos.length);
       if (result.videos.length == 0) {
         setCanLoad(false);
       }
@@ -57,20 +60,51 @@ const VideosListContainer = () => {
             <VideoItem video={video}></VideoItem>
           </li>
         ))}
-        ;
+        {isInitLoading && (
+          <div className="">
+            <HandleOnVisible
+              onVisible={() => {
+                setPage((prevPages) => prevPages + 1);
+              }}
+            ></HandleOnVisible>
+            {prevLoadedCount >= pageSize && (
+              <div className="item mx-2 my-5">
+                {/* thumbnail */}
+                <div className="w-75 h-45 rounded-lg bg-secondary " />
+
+                <div className="flex items-start mt-5">
+                  <div className="w-12 h-12 mr-5">
+                    {/* avatar */}
+                    <div className="h-12 min-w-[3rem] min-h-[3rem] w-12 rounded-full bg-secondary" />
+                  </div>
+                  <div className="text">
+                    {/* title */}
+                    <div className="text-secondary bg-secondary text-lg h-7 w-36"></div>
+                    <div className="mt-2">
+                      {/* author name */}
+                      <div className="text-secondary bg-secondary text-sm h-5 w-25"></div>
+                      <div className="text-secondary  text-sm flex mt-2">
+                        {/* views */}
+                        <div className="mr-2 bg-secondary w-16  h-5"></div>
+                        {/* date */}
+                        <div className="bg-secondary w-24  h-5"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+        {prevLoadedCount >= pageSize &&
+          Array.from(Array(11).keys()).map(() => (
+            <li key={Math.random()}>
+              <VideoItem video={null}></VideoItem>
+            </li>
+          ))}
       </ul>
 
-      <>
-        {isLoading && <OperationLoader></OperationLoader>}
-
-        {isInitLoading && (
-          <HandleOnVisible
-            onVisible={() => {
-              setPage((prevPages) => prevPages + 1);
-            }}
-          ></HandleOnVisible>
-        )}
-      </>
+      <>{/* {isLoading && <OperationLoader></OperationLoader>} */}</>
     </>
   );
 };
