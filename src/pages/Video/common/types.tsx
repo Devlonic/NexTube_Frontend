@@ -12,6 +12,7 @@ export interface IVideoLookup {
   accessModificator: string | null;
   playlistId: number | null | undefined;
   commentsCount: number | null;
+  isApproved: boolean | null | undefined;
 }
 
 export interface IGetVideoResult {
