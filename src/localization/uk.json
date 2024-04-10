@@ -89,7 +89,7 @@
     "reply": "Відповісти"
   },
   "mainPoster": {
-    "watchNow": "Дивіться зараз",
+    "watchNow": "Новинка!",
     "title": "Вільям Блек",
     "description": "англійський клоун, пойнтер і чорний чоловік",
     "from": "від"
@@ -144,7 +144,7 @@
     "createButton": "Створити",
     "details": "Деталі",
     "enterTitle": "Введіть назву плейлиста",
-    "selectPreview": "Виберіть попередній перегляд плейлиста"
+    "selectPreview": "Виберіть обкладинку"
   },
   "editPlaylists": {
     "createPlaylist": "Створити плейлист",
@@ -164,7 +164,7 @@
     "everyoneCanWatchDescription": "Всі можуть дивитися ваше відео",
     "onlyYouCanWatchDescription": "Тільки ви можете дивитися відео",
     "videoFilenameLabel": "Назва відеофайлу",
-    "selectVideoPreviewLabel": "Виберіть попередній перегляд відео"
+    "selectVideoPreviewLabel": "Виберіть обкладинку"
   },
   "editVideoOverlay": {
     "enterName": "Введіть назву",
@@ -211,7 +211,7 @@
     "friends": "Друзі",
     "library": "Бібліотека",
     "history": "Історія",
-    "likedVideos": "Подобається відео",
+    "likedVideos": "Улюблені",
     "watchLater": "Дивитися пізніше",
     "subscriptions": "Підписки",
     "settings": "Налаштування",
@@ -226,15 +226,15 @@
   "watchVideo": {
     "views": "перегляди",
     "timeAgo": "тому",
-    "subscribers": "підписники",
+    "subscribers": "підписників",
     "subscribe": "Підписатися",
     "copiedLink": "Скопійовано посилання в буфер обміну",
     "closeReportForm": "Закрити форму скарги",
     "share": "Поширити",
     "report": "Поскаржитись",
     "download": "Завантажити",
-    "saveToPlaylist": "Зберегти до плейлисту",
-    "subscribed": "Підписаний"
+    "saveToPlaylist": "Зберегти",
+    "subscribed": "Підписано"
   },
   "dropdownUser": {
     "verifyMail": "❗Підтвердіть пошту",
