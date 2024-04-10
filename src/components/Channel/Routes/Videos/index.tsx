@@ -42,7 +42,8 @@ const ChannelVideoItem = (props: { video: IVideoLookup }) => {
             <div className="mt-2">
               <h4 className="text-white text-sm">
                 <span className="mr-2">
-                  {numeral(props.video.views).format('0a').toUpperCase()} {t("videoItem.views")}
+                  {numeral(props.video.views).format('0a').toUpperCase()}{' '}
+                  {t('videoItem.views')}
                 </span>{' '}
                 <span>{dayjs(props.video.dateCreated).fromNow()}</span>
               </h4>
@@ -83,7 +84,7 @@ export const ChannelVideos = () => {
         )
       ).data;
 
-      setVideos(() => [...videos, ...result.videos]);
+      setVideos((prev_videos) => [...prev_videos, ...result.videos]);
 
       if (result.videos.length == 0) {
         setCanLoad(false);

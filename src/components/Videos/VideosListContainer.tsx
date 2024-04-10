@@ -36,7 +36,7 @@ const VideosListContainer = () => {
         )
       ).data;
 
-      setVideos(() => [...videos, ...result.videos]);
+      setVideos((prev_videos) => [...prev_videos, ...result.videos]);
 
       if (result.videos.length == 0) {
         setCanLoad(false);
@@ -46,11 +46,7 @@ const VideosListContainer = () => {
       setIsInitLoading(true);
     };
 
-    while (lock.isBusy('VideosListContainer')) console.log('busy');
-    lock.acquire('VideosListContainer', (done): any => {
-      loadVideoAsync();
-      done(null, null);
-    });
+    loadVideoAsync();
   }, [page]);
 
   return (

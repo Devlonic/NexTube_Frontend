@@ -101,7 +101,7 @@ const VideoRecommendationsContainer = () => {
         )
       ).data;
 
-      setVideos(() => [...videos, ...result.videos]);
+      setVideos((prev_videos) => [...prev_videos, ...result.videos]);
 
       if (result.videos.length == 0) {
         setCanLoad(false);
