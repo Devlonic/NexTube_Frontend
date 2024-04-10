@@ -1,4 +1,4 @@
 const setTitle = (title: string | null) => {
-  document.title = `${title ?? 'No title'} - NexTube`;
+  document.title = `${title ? title + ' - ' : ''}NexTube`;
 };
 export default setTitle;

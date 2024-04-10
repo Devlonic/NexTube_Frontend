@@ -68,7 +68,7 @@ const GoogleAuth = (props: { onLoading: EventHandler<any> }) => {
           }}
           width={'100%'}
           shape={'pill'}
-          theme={colorMode == 'dark' ? 'filled_black' : 'filled_blue'}
+          theme={'filled_black'}
         />
       </button>
     </>

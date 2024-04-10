@@ -13,10 +13,16 @@ import { recommendationVideosRoutes } from '../../routes';
 import { MainPoster } from '../../components/Home/MainPoster';
 
 import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
+import setTitle from '../../common/setTitle';
 
 const HomePage = () => {
   const { isAuth, user } = useSelector((store: any) => store.auth as IAuthUser);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setTitle('');
+  }, []);
 
   return (
     <>

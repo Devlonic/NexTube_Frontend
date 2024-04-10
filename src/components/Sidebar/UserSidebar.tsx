@@ -191,12 +191,30 @@ const UserSidebar = ({ sidebarOpen, setSidebarOpen }: UserSidebarProps) => {
                         icon={<ClockIcon></ClockIcon>}
                       ></SidebarItem>
                     </li>
+
+                    <li className="!text-gray !disabled pointer-events-none">
+                      <SidebarItem
+                        active={false}
+                        url="/liked"
+                        title={t('userSidebar.likedVideos')}
+                        icon={<HandThumbUpIcon></HandThumbUpIcon>}
+                      ></SidebarItem>
+                    </li>
+
+                    <li className="!text-gray !disabled pointer-events-none">
+                      <SidebarItem
+                        active={false}
+                        url="/later"
+                        title={t('userSidebar.watchLater')}
+                        icon={<ClockIcon></ClockIcon>}
+                      ></SidebarItem>
+                    </li>
                   </>
                 )}
 
                 {user == null && (
                   <>
-                    <li>
+                    <li className="text-white">
                       <SidebarItem
                         active={true}
                         url="/auth/signin"
@@ -207,112 +225,96 @@ const UserSidebar = ({ sidebarOpen, setSidebarOpen }: UserSidebarProps) => {
                   </>
                 )}
 
-                <li className="!text-gray !disabled pointer-events-none">
-                  <SidebarItem
-                    active={false}
-                    url="/liked"
-                    title={t('userSidebar.likedVideos')}
-                    icon={<HandThumbUpIcon></HandThumbUpIcon>}
-                  ></SidebarItem>
-                </li>
-
-                <li className="!text-gray !disabled pointer-events-none">
-                  <SidebarItem
-                    active={false}
-                    url="/later"
-                    title={t('userSidebar.watchLater')}
-                    icon={<ClockIcon></ClockIcon>}
-                  ></SidebarItem>
-                </li>
-
                 <li>
                   <div className="h-8"></div>
                 </li>
               </ul>
             </div>
-
-            <div className="sub">
-              <ul className="mb-6 flex flex-col gap-1.5">
-                {/* <!-- Menu Item Auth Pages --> */}
-                <SidebarLinkGroup activeCondition={true}>
-                  {(handleClick, open) => {
-                    return (
-                      <React.Fragment>
-                        <NavLink
-                          to="#"
-                          className={`!text-white group relative flex items-center gap-2.5 py-2 px-4 font-medium  duration-300 ease-in-out hover:bg-secondary dark:hover:bg-secondary rounded-lg ${
-                            (pathname === '/auth' ||
-                              pathname.includes('auth')) &&
-                            ''
-                          }`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            sidebarExpanded
-                              ? handleClick()
-                              : setSidebarExpanded(true);
-                          }}
-                        >
-                          {() => {
-                            if (window.localStorage.token != undefined)
-                              return t('userSidebar.subscriptions');
-                          }}
-                        </NavLink>
-                        {/* <!-- Dropdown Menu Start --> */}
-                        <div
-                          className={`translate transform overflow-hidden ${
-                            !open && 'hidden'
-                          }`}
-                        >
-                          <ul>
-                            {userSubscriptions.subscriptions.map(
-                              (subscription, index) => (
-                                <li key={index} className="!text-white">
-                                  <SidebarItem
-                                    active={true}
-                                    url={`/channel/${subscription.userId}`}
-                                    title={`${subscription.firstName} ${subscription.lastName}`}
-                                    icon={
-                                      <div className="thumb bg-danger rounded-full w-8 h-8">
-                                        {subscription.channelPhotoFileId && (
-                                          <img
-                                            className="h-8 w-8 rounded-full"
-                                            src={
-                                              '/api/Photo/GetPhotoUrl/' +
-                                              subscription.channelPhotoFileId +
-                                              '/50'
-                                            }
-                                            alt="User"
-                                          />
-                                        )}
-                                      </div>
-                                    }
-                                  />
-                                </li>
-                              ),
-                            )}
-                          </ul>{' '}
-                        </div>
-                        {/* <!-- Dropdown Menu End --> */}
-                      </React.Fragment>
-                    );
-                  }}
-                </SidebarLinkGroup>
-                {/* <!-- Menu Item Auth Pages --> */}
-              </ul>
-            </div>
+            {user && (
+              <div className="sub">
+                <ul className="mb-6 flex flex-col gap-1.5">
+                  {/* <!-- Menu Item Auth Pages --> */}
+                  <SidebarLinkGroup activeCondition={true}>
+                    {(handleClick, open) => {
+                      return (
+                        <React.Fragment>
+                          <NavLink
+                            to="#"
+                            className={`!text-white group relative flex items-center gap-2.5 py-2 px-4 font-medium  duration-300 ease-in-out hover:bg-secondary dark:hover:bg-secondary rounded-lg ${
+                              (pathname === '/auth' ||
+                                pathname.includes('auth')) &&
+                              ''
+                            }`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              sidebarExpanded
+                                ? handleClick()
+                                : setSidebarExpanded(true);
+                            }}
+                          >
+                            {() => {
+                              if (window.localStorage.token != undefined)
+                                return t('userSidebar.subscriptions');
+                            }}
+                          </NavLink>
+                          {/* <!-- Dropdown Menu Start --> */}
+                          <div
+                            className={`translate transform overflow-hidden ${
+                              !open && 'hidden'
+                            }`}
+                          >
+                            <ul>
+                              {userSubscriptions.subscriptions.map(
+                                (subscription, index) => (
+                                  <li key={index} className="!text-white">
+                                    <SidebarItem
+                                      active={true}
+                                      url={`/channel/${subscription.userId}`}
+                                      title={`${subscription.firstName} ${subscription.lastName}`}
+                                      icon={
+                                        <div className="thumb bg-danger rounded-full w-8 h-8">
+                                          {subscription.channelPhotoFileId && (
+                                            <img
+                                              className="h-8 w-8 rounded-full"
+                                              src={
+                                                '/api/Photo/GetPhotoUrl/' +
+                                                subscription.channelPhotoFileId +
+                                                '/50'
+                                              }
+                                              alt="User"
+                                            />
+                                          )}
+                                        </div>
+                                      }
+                                    />
+                                  </li>
+                                ),
+                              )}
+                            </ul>{' '}
+                          </div>
+                          {/* <!-- Dropdown Menu End --> */}
+                        </React.Fragment>
+                      );
+                    }}
+                  </SidebarLinkGroup>
+                  {/* <!-- Menu Item Auth Pages --> */}
+                </ul>
+              </div>
+            )}
 
             <div>
-              <ul className="mb-6 flex flex-col gap-1.5">
-                <li className="!text-white">
-                  <SidebarItem
-                    active={true}
-                    url="/profile/info"
-                    title={t('userSidebar.settings')}
-                    icon={<Cog6ToothIcon></Cog6ToothIcon>}
-                  ></SidebarItem>
-                </li>
+              {user && (
+                <ul className="mb-6 flex flex-col gap-1.5">
+                  <li className="!text-white">
+                    <SidebarItem
+                      active={true}
+                      url="/profile/info"
+                      title={t('userSidebar.settings')}
+                      icon={<Cog6ToothIcon></Cog6ToothIcon>}
+                    ></SidebarItem>
+                  </li>
 
-                {/* <li>
+                  {/* <li>
                   <SidebarItem
                     active={true}
                     url="/reports"
@@ -321,7 +323,7 @@ const UserSidebar = ({ sidebarOpen, setSidebarOpen }: UserSidebarProps) => {
                   ></SidebarItem>
                 </li> */}
 
-                {/* <li>
+                  {/* <li>
                   <SidebarItem
                     active={false}
                     url="/help"
@@ -329,7 +331,8 @@ const UserSidebar = ({ sidebarOpen, setSidebarOpen }: UserSidebarProps) => {
                     icon={<QuestionMarkCircleIcon></QuestionMarkCircleIcon>}
                   ></SidebarItem>
                 </li> */}
-              </ul>
+                </ul>
+              )}
             </div>
           </nav>
         </div>

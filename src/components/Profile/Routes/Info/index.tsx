@@ -4,7 +4,11 @@ import {
   FieldBasicEditBigInput,
   FieldBasicEditInput,
 } from '../../../common/inputs';
-import { ILoginResult, IUserUpdate,IPasswordChange } from '../../../../pages/UpdateUser/types';
+import {
+  ILoginResult,
+  IUserUpdate,
+  IPasswordChange,
+} from '../../../../pages/UpdateUser/types';
 import http_api from '../../../../services/http_api';
 import { useSelector } from 'react-redux';
 import { IAuthUser } from '../../../../store/reducers/auth/types';
@@ -20,7 +24,7 @@ export const ProfileInfo = () => {
     nickname: '',
     description: '',
     oldPassword: '',
-    newPassword: ''
+    newPassword: '',
   });
 
   const { isAuth, user } = useSelector((store: any) => store.auth as IAuthUser);
@@ -32,14 +36,18 @@ export const ProfileInfo = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await http_api.get<IUserUpdate>(`/api/User/GetUser?ChannelId=${user?.userId}`);
+      const response = await http_api.get<IUserUpdate>(
+        `/api/User/GetUser?ChannelId=${user?.userId}`,
+      );
       setUserData(response.data);
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = event.target;
     setUserData((prevData) => ({
       ...prevData,
@@ -49,17 +57,19 @@ export const ProfileInfo = () => {
 
   const handleSubmit = async () => {
     try {
-      console.log("Update", userData);
+      console.log('Update', userData);
       await http_api.put<ILoginResult>('/api/user/updateuser', userData);
-      if(userData.newPassword != null && userData.oldPassword !=null ){
-        await http_api.post<IPasswordChange>('/api/auth/changePassword',{password:userData.oldPassword,newPassword:userData.newPassword});
+      if (userData.newPassword != null && userData.oldPassword != null) {
+        await http_api.post<IPasswordChange>('/api/auth/changePassword', {
+          password: userData.oldPassword,
+          newPassword: userData.newPassword,
+        });
       }
       window.location.reload();
       handleSuccess('Update');
     } catch (error) {
       console.error('Error saving changes:', error);
       handleError(error);
-
     }
   };
 
@@ -113,9 +123,9 @@ export const ProfileInfo = () => {
         />
       </div>
       <div className="mb-6">
-        <FieldBasicEditInput 
+        <FieldBasicEditInput
           name="oldPassword"
-          title={t('profileInfo.changePassword')+" ⚠️ "}
+          title={t('profileInfo.changePassword') + ' ⚠️ '}
           description=""
           placeholder={t('profileInfo.oldPassword')}
           value={userData.oldPassword}
@@ -125,14 +135,14 @@ export const ProfileInfo = () => {
         />
         <FieldBasicEditInput
           name="newPassword"
-          title={""}
+          title={''}
           description=""
           placeholder={t('profileInfo.newPassword')}
           value={userData.newPassword}
           handleChange={handleInputChange}
           error=""
           type="password"
-        />  
+        />
       </div>
       <div className="mb-5">
         <button
