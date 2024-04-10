@@ -24,6 +24,7 @@ import VerifyMailPage from './pages/Authentication/VerifyMail/VerifyMail.tsx';
 import { HistoryVideoContainer } from './components/History/index.tsx';
 import './i18n';
 import { NotFoundPage } from './pages/ErrorPages/NotFoundPage.tsx';
+import { VideosControlPanel } from './components/Admin/Videos/VideosControlPanel.tsx';
 const AdminLayout = lazy(() => import('./layout/AdminLayout.tsx'));
 
 function App() {
@@ -149,6 +150,10 @@ function App() {
 
         <Route path={'/moderator'} element={<AdminLayout />}>
           <Route index element={<Moderator />} />
+          <Route
+            path="videos-control-panel"
+            element={<VideosControlPanel></VideosControlPanel>}
+          ></Route>
           {routes.map(({ path, component: Component }, id) => (
             <Route
               key={id}

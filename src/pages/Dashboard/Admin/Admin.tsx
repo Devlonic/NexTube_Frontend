@@ -1,5 +1,6 @@
 import UsersListContainer from '../../../components/Admin/AllUsers';
 import AllReports from '../../../components/Admin/AllReports';
+import { Link } from 'react-router-dom';
 
 const Admin = () => {
   return (
