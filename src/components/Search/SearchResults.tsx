@@ -1,6 +1,9 @@
 import dayjs from 'dayjs';
 import { Link, useParams } from 'react-router-dom';
-import { IGetVideoListResult, IVideoLookup } from '../../pages/Video/common/types';
+import {
+  IGetVideoListResult,
+  IVideoLookup,
+} from '../../pages/Video/common/types';
 import { useEffect, useState } from 'react';
 import http_api from '../../services/http_api';
 import OperationLoader from '../../common/OperationLoader';
@@ -25,10 +28,15 @@ const VideoItem = (props: { video: IVideoLookup }) => {
           <div className="text">
             <Link to={'/video/watch/' + props.video.id}>
               <h3 className="text-white font-semibold text-lg">
-                {props.video.name?.length! > 15 ? props.video.name?.slice(0, 15) + '...' : props.video.name}
+                {props.video.name?.length! > 15
+                  ? props.video.name?.slice(0, 15) + '...'
+                  : props.video.name}
               </h3>
               <h4 className="text-gray mb-2 text-sm">
-                <span className="mr-2">{numeral(props.video.views).format('0a').toUpperCase()} {t("videoItem.views")}</span>{' '}
+                <span className="mr-2">
+                  {numeral(props.video.views).format('0a').toUpperCase()}{' '}
+                  {t('videoItem.views')}
+                </span>{' '}
                 <span>{dayjs(props.video.dateCreated).fromNow()}</span>
               </h4>
             </Link>
@@ -45,14 +53,22 @@ const VideoItem = (props: { video: IVideoLookup }) => {
               </div>
               <div className="flex items-center justify-center">
                 <h4 className=" text-sm">
-                  {props.video.creator?.firstName.length! > 15 ? props.video.creator?.firstName?.slice(0, 15) + '...' : props.video.creator?.firstName}{' '}
-                  {props.video.creator?.lastName.length! > 15 ? props.video.creator?.lastName?.slice(0, 15) + '...' : props.video.creator?.lastName}
+                  {props.video.creator?.firstName.length! > 15
+                    ? props.video.creator?.firstName?.slice(0, 15) + '...'
+                    : props.video.creator?.firstName}{' '}
+                  {props.video.creator?.lastName.length! > 15
+                    ? props.video.creator?.lastName?.slice(0, 15) + '...'
+                    : props.video.creator?.lastName}
                 </h4>
               </div>
             </div>
           </Link>
           <div className="">
-            <h3>{props.video.description?.length! > 15 ? props.video.description?.slice(0, 15) + '...' : props.video.description}</h3>
+            <h3>
+              {props.video.description?.length! > 15
+                ? props.video.description?.slice(0, 15) + '...'
+                : props.video.description}
+            </h3>
           </div>
         </div>
       </div>
@@ -72,9 +88,7 @@ export const SearchResults = () => {
   const params = useParams();
 
   useEffect(() => {
-
     const loadVideoAsync = async () => {
-
       if (page == 0 || !canLoad) {
         console.log('abort loading');
         return;
@@ -85,10 +99,12 @@ export const SearchResults = () => {
       setIsLoading(true);
 
       const result = (
-        await http_api.get<IGetVideoListResult>(`/api/video/getVideoList?Name=${params.name}&Page=${page}&PageSize=${pageSize}`)
+        await http_api.get<IGetVideoListResult>(
+          `/api/video/getVideoList?Name=${params.name}&Page=${page}&PageSize=${pageSize}`,
+        )
       ).data;
 
-      setVideos(() => [...videos, ...result.videos]);
+      setVideos((prev_videos) => [...prev_videos, ...result.videos]);
 
       if (result.videos.length == 0) {
         setCanLoad(false);
@@ -96,7 +112,7 @@ export const SearchResults = () => {
 
       setIsLoading(() => false);
       setIsInitLoading(true);
-    }
+    };
 
     console.log(params.name);
     loadVideoAsync();
@@ -107,31 +123,37 @@ export const SearchResults = () => {
     setCanLoad(true);
     setIsInitLoading(false);
     setPage(1);
-    setNeedReload(prev => prev + 1);
+    setNeedReload((prev) => prev + 1);
   }, [params.name]);
 
   return (
     <>
       <>
-        {videos.length == 0 && <h1 className='flex items-center justify-center text-gray text-lg'>No result</h1>}
+        {videos.length == 0 && (
+          <h1 className="flex items-center justify-center text-gray text-lg">
+            No result
+          </h1>
+        )}
       </>
 
       <ul>
-        {videos.map((video => (
+        {videos.map((video) => (
           <li key={video.id}>
             <VideoItem video={video}></VideoItem>
           </li>
-        )))}
+        ))}
       </ul>
 
       <>
         {isLoading && <OperationLoader></OperationLoader>}
 
-        {isInitLoading && <HandleOnVisible
-          onVisible={() => {
-            setPage((prevPages) => prevPages + 1);
-          }}
-        ></HandleOnVisible>}
+        {isInitLoading && (
+          <HandleOnVisible
+            onVisible={() => {
+              setPage((prevPages) => prevPages + 1);
+            }}
+          ></HandleOnVisible>
+        )}
       </>
     </>
   );

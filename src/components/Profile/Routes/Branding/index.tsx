@@ -1,10 +1,11 @@
 // src/components/Profile/Routes/Branding/index.tsx
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PrimaryProcessingButton } from '../../../common/buttons/PrimaryProcessingButton';
 import { ModalCropper } from '../../../ModalCropper';
 import http_api from '../../../../services/http_api';
 import { handleError, handleSuccess } from '../../../../common/handleError';
 import { useTranslation } from 'react-i18next'; // Import the hook
+import setTitle from '../../../../common/setTitle';
 
 interface IchannelPhoto {
   ChannelPhotoFile: File | null;
@@ -29,6 +30,10 @@ export const ProfileBranding = () => {
       ChannelPhotoFile: file,
     }));
   };
+
+  useEffect(() => {
+    setTitle('Profile');
+  }, []);
 
   const handleUploadButtonClick = async () => {
     try {

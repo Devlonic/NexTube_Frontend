@@ -5,6 +5,7 @@ import { IGetVideoResult, IVideoLookup } from './common/types';
 import { WatchVideo } from '../../components/Videos/WatchVideo';
 import classNames from 'classnames';
 import { VideoRecommendationsContainer } from '../../components/Videos/VideoRecommendationsContainer';
+import setTitle from '../../common/setTitle';
 
 const VideoWatchPage = () => {
   const { videoId, playlistId } = useParams();
@@ -20,6 +21,10 @@ const VideoWatchPage = () => {
   }, [videoId]);
 
   const [video, setVideo] = useState<IVideoLookup>();
+
+  useEffect(() => {
+    setTitle(video?.name);
+  }, [video]);
 
   return (
     <>

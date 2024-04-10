@@ -13,10 +13,16 @@ import { recommendationVideosRoutes } from '../../routes';
 import { MainPoster } from '../../components/Home/MainPoster';
 
 import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
+import setTitle from '../../common/setTitle';
 
 const HomePage = () => {
   const { isAuth, user } = useSelector((store: any) => store.auth as IAuthUser);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setTitle('');
+  }, []);
 
   return (
     <>
@@ -25,7 +31,7 @@ const HomePage = () => {
           <>
             <MainPoster></MainPoster>
             {!isAuth && (
-              <div className="flex relative z-[999]">
+              <div className="flex relative z-[999] mt-12">
                 <div className="mr-4">
                   <div className="h-12 w-12 p-2 rounded-full bg-gray hover:bg-primary duration-300 ease-in-out">
                     <UserIcon></UserIcon>
@@ -39,13 +45,15 @@ const HomePage = () => {
                     <div className="icon w-8 relative">
                       <VideoCameraIcon></VideoCameraIcon>
                     </div>
-                    <span className="font-bold">{t('homePage.signInToAct')}</span>
+                    <span className="font-bold">
+                      {t('homePage.signInToAct')}
+                    </span>
                   </Link>
                 </div>
               </div>
             )}
             {isAuth && (
-              <div className="flex relative z-[999]">
+              <div className="flex relative z-[999]  mt-12">
                 <div className="mr-4">
                   <ChannelPhoto photoFileId={user?.channelPhoto}></ChannelPhoto>
                 </div>
@@ -57,7 +65,9 @@ const HomePage = () => {
                     <div className="icon w-8 relative">
                       <VideoCameraIcon></VideoCameraIcon>
                     </div>
-                    <span className="font-bold">{t('homePage.createVideo')}</span>
+                    <span className="font-bold">
+                      {t('homePage.createVideo')}
+                    </span>
                   </Link>
                 </div>
               </div>

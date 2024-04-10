@@ -30,9 +30,10 @@ const HandleOnVisible = (props: { onVisible: EventHandler<any> }) => {
   }, [myElementRef]);
 
   return (
-    <div className="text-transparent" ref={myElementRef}>
-      loader
-    </div>
+    <div
+      className="text-transparent select-none w-12 h-[1px]"
+      ref={myElementRef}
+    ></div>
   );
 };
 

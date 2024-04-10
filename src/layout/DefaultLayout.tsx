@@ -7,11 +7,14 @@ import { isSignedIn } from '../services/tokenService';
 import './../styles/custom-scrollbar.css';
 import { store } from '../store';
 import { ScrollingReducerActionTypes } from '../store/reducers/scrolling/ScrollingReducer';
+import GoogleAuthWrapper from '../components/Auth/Google/GoogleAuthWrapper';
+import { useSelector } from 'react-redux';
+import { IAuthUser } from '../store/reducers/auth/types';
 const DefaultLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
   const navigator = useNavigate();
   const scrollable = useRef<any>();
-
+  const { isAuth } = useSelector((store: any) => store.auth as IAuthUser);
   useEffect(() => {
     store.dispatch({
       type: ScrollingReducerActionTypes.SET_SCROLLABLE_COMPONENT,
@@ -21,6 +24,12 @@ const DefaultLayout = () => {
 
   return (
     <div className="dark:bg-body dark:text-bodydark ">
+      {!isAuth && (
+        <div className="hidden">
+          <GoogleAuthWrapper onLoading={() => {}}></GoogleAuthWrapper>
+        </div>
+      )}
+
       {/* <!-- ===== Page Wrapper Start ===== --> */}
       <div className="flex h-screen overflow-hidden">
         <UserSidebar

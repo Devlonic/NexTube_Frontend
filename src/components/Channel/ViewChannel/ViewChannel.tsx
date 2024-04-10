@@ -16,6 +16,7 @@ import { channelRoutes } from '../../../routes';
 import { IAuthUser } from '../../../store/reducers/auth/types';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import setTitle from '../../../common/setTitle';
 
 const ViewChannel = () => {
   const { t } = useTranslation();
@@ -23,6 +24,10 @@ const ViewChannel = () => {
   const { id } = useParams();
   const parts = location.pathname.split('/');
   const { isAuth, user } = useSelector((store: any) => store.auth as IAuthUser);
+
+  useEffect(() => {
+    setTitle(`${user?.lastName} ${user?.firstName}`);
+  }, []);
 
   const [showReportForm, setShowReportForm] = useState(false);
 
