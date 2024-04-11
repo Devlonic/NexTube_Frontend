@@ -85,7 +85,7 @@ const CommentRepliesLoader = (props: {
           ></CommentsContainer>
         </>
       )}
-      <div className="w-30">
+      <div className="">
         <button
           className="text-primary font-bold text-lg"
           onClick={() => {
@@ -98,9 +98,15 @@ const CommentRepliesLoader = (props: {
               <ChevronDownIcon></ChevronDownIcon>
             </div>
             {replies.length === 0 && (
-              <span>{props.totalCommentRepliesCount} {t('commentRepliesLoader.replies')}</span>
+              <span>
+                {`${props.totalCommentRepliesCount} ${t(
+                  'commentRepliesLoader.replies',
+                )}`}
+              </span>
             )}
-            {replies.length > 0 && <span>{t('commentRepliesLoader.loadMore')}</span>}
+            {replies.length > 0 && (
+              <span>{t('commentRepliesLoader.loadMore')}</span>
+            )}
           </div>
         </button>
       </div>
