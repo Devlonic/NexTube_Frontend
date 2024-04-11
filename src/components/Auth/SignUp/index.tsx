@@ -29,8 +29,14 @@ const SignUpWidget = () => {
   };
 
   const requestSchema = yup.object({
-    email: yup.string().required(t('auth.signUp.yourEmail')).email(t('auth.signUp.emailValidation')),
-    password: yup.string().required(t('auth.signUp.yourPassword')).min(8, t('auth.signUp.passwordMinLength')),
+    email: yup
+      .string()
+      .required(t('auth.signUp.yourEmail'))
+      .email(t('auth.signUp.emailValidation')),
+    password: yup
+      .string()
+      .required(t('auth.signUp.yourPassword'))
+      .min(8, t('auth.signUp.passwordMinLength')),
     passwordConfirm: yup
       .string()
       .required(t('auth.signUp.repeatPassword'))
@@ -45,11 +51,15 @@ const SignUpWidget = () => {
   const onFormSubmit = async (values: IRegistrationRequest) => {
     try {
       setIsLoading(() => true);
-      const result = await http_api.post<IRegistrationResult>('/api/auth/signup', values, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+      const result = await http_api.post<IRegistrationResult>(
+        '/api/auth/signup',
+        values,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         },
-      });
+      );
 
       const { token, verificationToken } = result.data;
       storeToken(token);
@@ -96,7 +106,10 @@ const SignUpWidget = () => {
               <form onSubmit={handleSubmit}>
                 <div className="flex w-full mb-7 mt-7">
                   <div className="relative">
-                    <ModalCropper onSave={onImageChangeHandler} error={errors.channelPhoto}></ModalCropper>
+                    <ModalCropper
+                      onSave={onImageChangeHandler}
+                      error={errors.channelPhoto}
+                    ></ModalCropper>
                   </div>
                 </div>
 
@@ -160,7 +173,7 @@ const SignUpWidget = () => {
                 </div>
 
                 <div className="mb-5 flex">
-                  <div className="w-30">
+                  <div className="w-auto">
                     <PrimaryProcessingButton
                       onClick={() => {}}
                       text={t('auth.signUp.signUpButton')}
