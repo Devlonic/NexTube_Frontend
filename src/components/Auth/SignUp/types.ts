@@ -7,6 +7,7 @@ export interface IRegistrationRequest {
   firstName: string;
   lastName: string;
   channelPhoto: File | null;
+  captchaToken: string;
 }
 
 export interface IRegistrationResult {

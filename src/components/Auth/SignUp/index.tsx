@@ -13,6 +13,7 @@ import { IRegistrationRequest, IRegistrationResult } from './types';
 import { SignUpTitle, SubTitle } from './SignUpTitle';
 import { RegistrationInput } from '../../common/inputs';
 import { useTranslation } from 'react-i18next';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const SignUpWidget = () => {
   const { t } = useTranslation();
@@ -26,6 +27,7 @@ const SignUpWidget = () => {
     firstName: '',
     lastName: '',
     channelPhoto: null,
+    captchaToken: '',
   };
 
   const requestSchema = yup.object({
@@ -46,6 +48,7 @@ const SignUpWidget = () => {
     firstName: yup.string().required(t('auth.signUp.yourFirstName')).min(2),
     lastName: yup.string().required(t('auth.signUp.yourLastName')).min(2),
     channelPhoto: yup.mixed().required(t('auth.signUp.imageError')),
+    captchaToken: yup.mixed().required('Submit captcha'),
   });
 
   const onFormSubmit = async (values: IRegistrationRequest) => {
@@ -169,6 +172,32 @@ const SignUpWidget = () => {
                       type="password"
                       labelText={t('auth.signUp.repeatPassword')}
                     ></RegistrationInput>
+                  </div>
+                </div>
+
+                <div className="flex w-full mb-7">
+                  <div className="w-full">
+                    <input
+                      type="hidden"
+                      name="captchaToken"
+                      id="captchaToken"
+                      value={values.captchaToken}
+                      onChange={handleChange}
+                    />
+
+                    <ReCAPTCHA
+                      theme="dark"
+                      sitekey="6LfP4rgpAAAAANKfI6yyf7GIyIGjTBOHQBzlIE-P"
+                      onChange={(value) => {
+                        values.captchaToken = value;
+                        console.log('captcha submit', value);
+                      }}
+                    ></ReCAPTCHA>
+                    {errors.captchaToken && (
+                      <div className="mt-2 text-md dark:text-danger">
+                        {errors.captchaToken}
+                      </div>
+                    )}
                   </div>
                 </div>
 
