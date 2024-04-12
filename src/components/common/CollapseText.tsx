@@ -17,7 +17,12 @@ export const CollapseText = (props: { text: string | undefined | null }) => {
         })}
         onClick={() => setIsOpen(() => true)}
       >
-        <p className="text-white text-md">{props.text}</p>
+        <div
+          className="text-white text-md"
+          dangerouslySetInnerHTML={{
+            __html: props.text!.replace(/\n/g, '<br>'),
+          }}
+        ></div>
       </div>
       <div className="w-full flex justify-center">
         <div
