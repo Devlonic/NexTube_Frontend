@@ -154,6 +154,7 @@ const WatchVideo = (props: { video: IVideoLookup | undefined }) => {
               ></AddVideoReaction>
               <div className="mr-5">
                 <IconedProcessingButton
+                  collapseTextOn="lg"
                   isLoading={false}
                   onClick={() => {
                     navigator.clipboard.writeText(window.location.href);
